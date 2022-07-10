@@ -3,13 +3,17 @@ import ReactDOM from 'react-dom/client';
 import './index.css';
 import reportWebVitals from './reportWebVitals';
 import { Main } from './components/main';
+import App from './App';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <Main />
+    <div className="bg-slate-100 w-1/2">
+      <App />
+      <Main />    
+    </div>
   </React.StrictMode>
 );
 

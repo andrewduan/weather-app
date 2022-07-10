@@ -65,20 +65,22 @@ export const Main: FC = () => {
     
     return (
         <>
-            <div>
-                <span>Location: </span><input type="text" value={location} onChange={(e) => setLocation(e.target.value)}></input>
-                <label>
-                  Use Metric: <input type="checkbox" checked={isMetric} onChange={handleChange} />                  
-                </label>
+            <div className="my-5 px-4 flex">
+                <div className="w-1/2 px-4"><span>Location: </span><input type="text" value={location} onChange={(e) => setLocation(e.target.value)}></input></div>
+                <div className="w-1/2 px-4"><label>Use Metric: <input type="checkbox" checked={isMetric} onChange={handleChange} /></label></div>
             </div> 
             {
               weather.current && <CurrentCondition location={location} current={weather.current} isMetric={isMetric}></CurrentCondition>
             }
 
-            {
-              weather.forecasts && weather.forecasts.map((forecast, index) => (
-                <Forecast key={index} forecast={forecast}></Forecast>
-            ))
+            {weather.forecasts &&
+              <div className="flex flex-row px-4">
+              {
+              weather.forecasts.map((forecast, index) => (                
+                  <Forecast key={index} forecast={forecast}></Forecast>
+              ))
+              }
+            </div>
             }
         </>
     );
