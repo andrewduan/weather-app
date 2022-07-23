@@ -1,12 +1,10 @@
-export const getDay = (datetime: string): string => {
+export const getDay = (datetime: Date): string => {
   const days = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday'];
-  const d = new Date(datetime);
-  return days[d.getDay()];
+  return days[datetime.getDay()];
 };
 
-export const isToday = (datetime: string): boolean => {
+export const isToday = (dayToCheck: Date): boolean => {
   const today = new Date();
-  const dayToCheck = new Date(datetime);
 
   return (
     today.getFullYear() === dayToCheck.getFullYear() &&

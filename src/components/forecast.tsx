@@ -1,15 +1,16 @@
 import React from 'react';
+import { ForecastProp } from '../models/props/forecast';
 import { getDay, isDaytime, isToday } from '../util/dateHelper';
 import { getWeatherIcon } from '../util/iconHelper';
 
-export function Forecast (props: any) {
+export function Forecast (props: ForecastProp) {
   const { forecast } = props;
   let dayName = getDay(forecast.date);
   if (isToday(forecast.date)) {
     dayName = 'Today';
   }
 
-  const weather = isDaytime ? forecast.dayDetail : forecast.nightDetail;
+  const weather = isDaytime() ? forecast.dayDetail : forecast.nightDetail;
   const iconUrl = getWeatherIcon(weather.icon);
   const italicMedium = 'italic font-medium';
   const fontlight = 'font-light flex';

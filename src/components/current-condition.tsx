@@ -1,7 +1,8 @@
 import React from 'react';
 import { getDay } from '../util/dateHelper';
 import { getWeatherIcon } from '../util/iconHelper';
-export function CurrentCondition (props: any) {
+import { LocationProp } from '../models/props/location';
+export function CurrentCondition (props: LocationProp) {
   const { location, current, isMetric } = props;
   const dayName = getDay(current.date);
   const precipitation = isMetric ? current.precipitation.metric : current.precipitation.imperial;

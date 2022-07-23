@@ -36,7 +36,6 @@ export const Main: FC = () => {
 
       fetchLocation()
         .then((data) => {
-          console.log('data in fetch location', data);
           if (data && Array.isArray(data) && data.length > 0) {
             setLocation(data[0].LocalizedName);
             setLocationId(data[0].Key);
@@ -44,7 +43,6 @@ export const Main: FC = () => {
 
           fetchWeather()
             .then((data) => {
-              console.log('data in fetch weather', data);
               const weatherInfo: WeatherInfo = {
                 current: mapCurrent(data[0][0]),
                 forecasts: mapForecasts(data[1].DailyForecasts)
@@ -60,11 +58,6 @@ export const Main: FC = () => {
   const handleChange = () => {
     setIsMetric(!isMetric);
   };
-
-  console.log('location', location, locationId);
-  if (weather) {
-    console.log(weather);
-  }
 
   return (
     <>
