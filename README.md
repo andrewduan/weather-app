@@ -30,6 +30,7 @@ Your app is ready to be deployed!
 See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
 
 ### `npm run lint`
+
 ### `npm run prettier`
 
 Lint & Prettier command will format code and indicate some issues (unused variables) to fix.
@@ -40,7 +41,3 @@ Lint & Prettier command will format code and indicate some issues (unused variab
 
 2. Add some tests,
    Current tests have covers 3 components. We need to add some tests from helpers. We can even add some integration tests
-
-
-
-

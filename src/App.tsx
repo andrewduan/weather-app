@@ -1,7 +1,7 @@
 import React from 'react';
 import './App.css';
 
-function App () {
+function App() {
   return (
     <div className="mx-8 my-8">
       <header className="">

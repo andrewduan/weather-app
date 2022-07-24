@@ -2,7 +2,7 @@ import React from 'react';
 import { getDay } from '../util/dateHelper';
 import { getWeatherIcon } from '../util/iconHelper';
 import { LocationProp } from '../models/props/location';
-export function CurrentCondition (props: LocationProp) {
+export function CurrentCondition(props: LocationProp) {
   const { location, current, isMetric } = props;
   const dayName = getDay(current.date);
   const precipitation = isMetric ? current.precipitation.metric : current.precipitation.imperial;

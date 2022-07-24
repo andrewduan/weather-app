@@ -3,7 +3,7 @@ import { ForecastProp } from '../models/props/forecast';
 import { getDay, isDaytime, isToday } from '../util/dateHelper';
 import { getWeatherIcon } from '../util/iconHelper';
 
-export function Forecast (props: ForecastProp) {
+export function Forecast(props: ForecastProp) {
   const { forecast } = props;
   let dayName = getDay(forecast.date);
   if (isToday(forecast.date)) {
@@ -30,12 +30,12 @@ export function Forecast (props: ForecastProp) {
               src={process.env.PUBLIC_URL + unitIcon}
               width="20"
               height="20"
-              alt={forecast.temperatureRange.maximum.unit}
+              alt={forecast.temperatureRange.minimum.unit}
             ></img>
           </div>
         </div>
         <div className={fontlight}>
-          {forecast.temperatureRange.maximum.value}{' '}
+          <div>{forecast.temperatureRange.maximum.value}</div>
           <img
             src={process.env.PUBLIC_URL + unitIcon}
             width="20"
