@@ -5,18 +5,26 @@ import { LocationProp } from '../models/props/location';
 export function CurrentCondition(props: LocationProp) {
   const { location, current, isMetric } = props;
   const dayName = getDay(current.date);
-  const precipitation = isMetric ? current.precipitation.metric : current.precipitation.imperial;
-  const temperature = isMetric ? current.temperature.metric : current.temperature.imperial;
+  
+  const { metric: metricPrecipitation, imperial: imperialPrecipitation } = current.precipitation;
+  const precipitation = isMetric ? metricPrecipitation : imperialPrecipitation;
+  
+  const { metric: metricTemperature, imperial: imperialTemperature } = current.temperature;
+  const temperature = isMetric ? metricTemperature :imperialTemperature;
+  
   const { direction } = current.wind;
-  const speed = isMetric ? current.wind.speed.metric : current.wind.speed.imperial;
-  const css = 'font-sans md:font-serif text-slate-600';
+
+  const { metric: metricSpeed, imperial: imperialSpeed } = current.wind.speed;
+  const speed = isMetric ? metricSpeed : imperialSpeed;
+
+  const fontCss = 'font-sans md:font-serif text-slate-600';
   const iconUrl = getWeatherIcon(current.weatherDetail.icon);
   return (
     <>
       <div className="flex flex-row my-8" id="current">
         <div className="w-1/2 px-4" id="currentMain">
-          <div className={`${css} text-lg font-bold`}>{location}</div>
-          <div className={css}>{dayName}</div>
+          <div className={`${fontCss} text-lg font-bold`}>{location}</div>
+          <div className={fontCss}>{dayName}</div>
           <div>
             <img
               typeof="foaf:Image"
@@ -27,17 +35,17 @@ export function CurrentCondition(props: LocationProp) {
               title={current.weatherDetail.text}
             ></img>
           </div>
-          <div className={css}>{current.weatherDetail.text}</div>
+          <div className={fontCss}>{current.weatherDetail.text}</div>
         </div>
         <div className="w-1/2 px-4" id="currentOther">
-          <div className={css}>
+          <div className={fontCss}>
             Temperature: {temperature.value} {temperature.unit}
           </div>
-          <div className={css}>
+          <div className={fontCss}>
             Precipitation: {precipitation.value} {precipitation.unit}
           </div>
-          <div className={css}>Humidity: {current.humidity}%</div>
-          <div className={css}>
+          <div className={fontCss}>Humidity: {current.humidity}%</div>
+          <div className={fontCss}>
             Wind: {direction.localized} {speed.value} {speed.unit}
           </div>
         </div>

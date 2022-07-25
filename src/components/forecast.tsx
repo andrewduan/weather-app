@@ -4,43 +4,48 @@ import { getDay, isDaytime, isToday } from '../util/dateHelper';
 import { getWeatherIcon } from '../util/iconHelper';
 
 export function Forecast(props: ForecastProp) {
-  const { forecast } = props;
-  let dayName = getDay(forecast.date);
-  if (isToday(forecast.date)) {
-    dayName = 'Today';
-  }
+  
+  const { dayDetail, nightDetail, temperatureRange: { minimum: lowTemperature, maximum: highTemperature }, date } = props.forecast;
 
-  const weather = isDaytime() ? forecast.dayDetail : forecast.nightDetail;
-  const iconUrl = getWeatherIcon(weather.icon);
+  let dayName = getDay(date);
+  if (isToday(date)) {
+    dayName = 'Today';
+  }  
+  const weatherDetail = isDaytime() ? dayDetail : nightDetail;
+  const { icon, text } = weatherDetail;
+  const iconUrl = getWeatherIcon(icon);
   const italicMedium = 'italic font-medium';
   const fontlight = 'font-light flex';
-  const unitIcon = forecast.temperatureRange.minimum.unit === 'C' ? '/thermometer.png' : '/fahrenheit.png';
+
+  const { unit: lowTemperatureUnit, value: lowTemperatureValue } = lowTemperature;
+  const { unit: highTemperatureUnit, value: highTemperatureValue } = highTemperature;
+  const unitIcon = lowTemperatureUnit === 'C' ? '/thermometer.png' : '/fahrenheit.png';
 
   return (
     <>
       <div className="w-1/5" id="forecast">
         <div className={italicMedium}>{dayName}</div>
         <div>
-          <img typeof="foaf:Image" src={iconUrl} width="75" height="45" alt={weather.text} title={weather.text}></img>
+          <img typeof="foaf:Image" src={iconUrl} width="75" height="45" alt={text} title={text}></img>
         </div>
         <div className={fontlight}>
-          <div>{forecast.temperatureRange.minimum.value}</div>
+          <div>{lowTemperatureValue}</div>
           <div>
             <img
               src={process.env.PUBLIC_URL + unitIcon}
               width="20"
               height="20"
-              alt={forecast.temperatureRange.minimum.unit}
+              alt={lowTemperatureUnit}
             ></img>
           </div>
         </div>
         <div className={fontlight}>
-          <div>{forecast.temperatureRange.maximum.value}</div>
+          <div>{highTemperatureValue}</div>
           <img
             src={process.env.PUBLIC_URL + unitIcon}
             width="20"
             height="20"
-            alt={forecast.temperatureRange.maximum.unit}
+            alt={highTemperatureUnit}
           ></img>
         </div>
       </div>
