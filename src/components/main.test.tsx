@@ -8,7 +8,7 @@ import {
   mockSydneyLocationData,
   mockMelbourneCurrentData,
   mockSydneyMetricForecastsData,
-  mockSydneyImperialForecastsData,
+  mockSydneyImperialForecastsData
 } from '../../tests/data';
 import { Main } from './main';
 describe('main', () => {
@@ -38,7 +38,7 @@ describe('main', () => {
             }
             return Promise.resolve(mockSydneyImperialForecastsData);
           }
-        },
+        }
       });
     }) as jest.Mock;
   });
@@ -69,16 +69,15 @@ describe('main', () => {
 
     // current weather
     const currentMetricTemp = await within(container).findByText('Temperature: 8.4 C');
-    expect(currentMetricTemp).not.toBeNull();    
+    expect(currentMetricTemp).not.toBeNull();
 
     // forecast
     const lowTempForecast = await within(container).findByText('7.3');
     expect(lowTempForecast).not.toBeNull();
 
     let forecastMetricImages = await within(container).findAllByRole('img');
-    forecastMetricImages = forecastMetricImages.filter(i => i.getAttribute('src').indexOf('/thermometer.png') > -1);
+    forecastMetricImages = forecastMetricImages.filter((i) => i.getAttribute('src').indexOf('/thermometer.png') > -1);
     expect(forecastMetricImages.length).toBe(10);
-
   });
 
   it('should render main when location changes & Metric change', async () => {
@@ -99,14 +98,16 @@ describe('main', () => {
 
     // current weather
     const currentImperialTemp = await within(container).findByText('Temperature: 46.2 F');
-    expect(currentImperialTemp).not.toBeNull();    
+    expect(currentImperialTemp).not.toBeNull();
 
-    // forecast    
+    // forecast
     const lowTempImpForecast = await within(container).findByText('27.5');
     expect(lowTempImpForecast).not.toBeNull();
 
     let forecastImperialImages = await within(container).findAllByRole('img');
-    forecastImperialImages = forecastImperialImages.filter(i => i.getAttribute('src').indexOf('/fahrenheit.png') > -1);
+    forecastImperialImages = forecastImperialImages.filter(
+      (i) => i.getAttribute('src').indexOf('/fahrenheit.png') > -1
+    );
     expect(forecastImperialImages.length).toBe(10);
   });
 });

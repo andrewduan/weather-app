@@ -4,13 +4,17 @@ import { getDay, isDaytime, isToday } from '../util/dateHelper';
 import { getWeatherIcon } from '../util/iconHelper';
 
 export const Forecast: FC<ForecastProp> = (props) => {
-  
-  const { dayDetail, nightDetail, temperatureRange: { minimum: lowTemperature, maximum: highTemperature }, date } = props.forecast;
+  const {
+    dayDetail,
+    nightDetail,
+    temperatureRange: { minimum: lowTemperature, maximum: highTemperature },
+    date
+  } = props.forecast;
 
   let dayName = getDay(date);
   if (isToday(date)) {
     dayName = 'Today';
-  }  
+  }
   const weatherDetail = isDaytime() ? dayDetail : nightDetail;
   const { icon, text } = weatherDetail;
   const iconUrl = getWeatherIcon(icon);
@@ -31,24 +35,14 @@ export const Forecast: FC<ForecastProp> = (props) => {
         <div className={fontlight}>
           <div>{lowTemperatureValue}</div>
           <div>
-            <img
-              src={process.env.PUBLIC_URL + unitIcon}
-              width="20"
-              height="20"
-              alt={lowTemperatureUnit}
-            ></img>
+            <img src={process.env.PUBLIC_URL + unitIcon} width="20" height="20" alt={lowTemperatureUnit}></img>
           </div>
         </div>
         <div className={fontlight}>
           <div>{highTemperatureValue}</div>
-          <img
-            src={process.env.PUBLIC_URL + unitIcon}
-            width="20"
-            height="20"
-            alt={highTemperatureUnit}
-          ></img>
+          <img src={process.env.PUBLIC_URL + unitIcon} width="20" height="20" alt={highTemperatureUnit}></img>
         </div>
       </div>
     </>
   );
-}
+};

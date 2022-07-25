@@ -45,7 +45,7 @@ export const Main: FC = () => {
             .then((data) => {
               const weatherInfo: WeatherInfo = {
                 current: mapCurrent(data[0][0]),
-                forecasts: mapForecasts(data[1].DailyForecasts),
+                forecasts: mapForecasts(data[1].DailyForecasts)
               };
               setWeather(weatherInfo);
             })

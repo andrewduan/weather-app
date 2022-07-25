@@ -5,13 +5,13 @@ import { LocationProp } from '../models/props/location';
 export const CurrentCondition: FC<LocationProp> = (props) => {
   const { location, current, isMetric } = props;
   const dayName = getDay(current.date);
-  
+
   const { metric: metricPrecipitation, imperial: imperialPrecipitation } = current.precipitation;
   const precipitation = isMetric ? metricPrecipitation : imperialPrecipitation;
-  
+
   const { metric: metricTemperature, imperial: imperialTemperature } = current.temperature;
-  const temperature = isMetric ? metricTemperature :imperialTemperature;
-  
+  const temperature = isMetric ? metricTemperature : imperialTemperature;
+
   const { direction } = current.wind;
 
   const { metric: metricSpeed, imperial: imperialSpeed } = current.wind.speed;
@@ -52,4 +52,4 @@ export const CurrentCondition: FC<LocationProp> = (props) => {
       </div>
     </>
   );
-}
+};
