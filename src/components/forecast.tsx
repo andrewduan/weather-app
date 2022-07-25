@@ -1,9 +1,9 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { ForecastProp } from '../models/props/forecast';
 import { getDay, isDaytime, isToday } from '../util/dateHelper';
 import { getWeatherIcon } from '../util/iconHelper';
 
-export function Forecast(props: ForecastProp) {
+export const Forecast: FC<ForecastProp> = (props) => {
   
   const { dayDetail, nightDetail, temperatureRange: { minimum: lowTemperature, maximum: highTemperature }, date } = props.forecast;
 

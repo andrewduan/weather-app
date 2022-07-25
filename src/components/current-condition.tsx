@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { FC } from 'react';
 import { getDay } from '../util/dateHelper';
 import { getWeatherIcon } from '../util/iconHelper';
 import { LocationProp } from '../models/props/location';
-export function CurrentCondition(props: LocationProp) {
+export const CurrentCondition: FC<LocationProp> = (props) => {
   const { location, current, isMetric } = props;
   const dayName = getDay(current.date);
   
