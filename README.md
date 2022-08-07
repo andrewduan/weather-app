@@ -41,3 +41,12 @@ Lint & Prettier command will format code and indicate some issues (unused variab
 
 2. Add some tests,
    Current tests have covers 3 components. We need to add some tests from helpers. We can even add some integration tests
+
+
+## Docker support"
+
+### `docker-compose up`
+then we can access `http://localhost:4546`
+
+
+
