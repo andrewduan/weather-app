@@ -1,52 +1,110 @@
-# Getting Started with Create React App
+# Weather App
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+A weather app with an AI assistant. The UI shows current conditions and a 5-day
+forecast for any city. Users can also ask follow-up questions in natural
+language ("what's it usually like in Paris in May?", "should I pack a jacket for
+Tokyo next week?") and get answers grounded in real current weather and
+historical climate records.
 
-## Available Scripts
+## Architecture
 
-In the project directory, you can run:
+```
+┌────────────────────┐   GraphQL    ┌────────────────────────────┐
+│  React + Vite UI   │ ───────────▶ │  Express + Apollo Server   │
+│  Apollo Client     │              │  (BFF)                     │
+└────────────────────┘              └────────────────────────────┘
+                                                │
+                       ┌────────────────────────┼────────────────────────┐
+                       ▼                        ▼                        ▼
+                 AccuWeather API        Open-Meteo Archive         Anthropic API
+                 (current + 5-day)      (historical climate)       (Claude)
+```
 
-### `npm start`
+- **Frontend** (`src/frontend`) — React + Vite + Apollo Client.
+- **BFF** (`src/server`) — Express + Apollo Server. Owns all API keys; the
+  browser never talks to upstream providers directly.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+## AI assistant flow
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+When a user submits a question, the BFF:
 
-### `npm test`
+1. Runs a PII check on the question (rejects emails, phone numbers, etc.).
+2. Asks Claude to extract `{location, month, day?}` from the question, falling
+   back to the currently-displayed location and current month.
+3. Calls the Open-Meteo Archive API via `fetchHistoricalWeather` to pull the
+   last 5 years of daily records for that location and date.
+4. Summarises those records to plain text and passes them to Claude along with
+   the user's current weather context, so the answer is grounded in real
+   climate data rather than the model's general knowledge.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Project layout
 
-### `npm run build`
+```
+src/
+├── frontend/        # React + Vite + Apollo Client
+│   ├── App.tsx
+│   ├── AiAssistance.tsx
+│   ├── weather-query.ts
+│   ├── pii.ts
+│   └── ...
+└── server/          # Express + Apollo Server BFF
+    ├── index.ts
+    ├── schema.ts
+    ├── resolvers.ts
+    ├── weather-service.ts      # AccuWeather
+    ├── historical-weather.ts   # Open-Meteo archive
+    ├── ai-service.ts           # Anthropic / Claude
+    └── pii.ts
+```
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Setup
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+1. **Install dependencies** (frontend + server are separate npm packages):
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+   ```bash
+   npm run install:all
+   ```
 
-### `npm run lint`
+2. **Configure the BFF** — copy the example and fill in your keys:
 
-### `npm run prettier`
+   ```bash
+   cp src/server/.env.example src/server/.env
+   ```
 
-Lint & Prettier command will format code and indicate some issues (unused variables) to fix.
+   Required keys in `src/server/.env`:
 
-### `TODO`
+   - `ACCUWEATHER_API_KEY` — for current weather + forecast
+   - `ANTHROPIC_API_KEY` — for the AI assistant
+   - `PORT` (optional, defaults to `4000`)
 
-1. Add some error handling
+3. **Configure the frontend** (optional — defaults usually fine):
 
-2. Add some tests,
-   Current tests have covers 3 components. We need to add some tests from helpers. We can even add some integration tests
+   ```bash
+   cp src/frontend/.env.example src/frontend/.env
+   ```
 
+## Running
 
-## Docker support"
+```bash
+npm run dev            # frontend + server together
+npm run dev:frontend   # frontend only (http://localhost:5173)
+npm run dev:server     # server only   (http://localhost:4000/graphql)
+```
 
-### `docker-compose up`
-then we can access `http://localhost:4546`
+Build the frontend bundle:
 
+```bash
+npm run build
+```
 
+## GraphQL API
 
+```graphql
+type Query {
+  weather(location: String!, metric: Boolean = true): WeatherPayload!
+  askAi(question: String!, weather: WeatherContextInput): String!
+}
+```
+
+The GraphQL Playground is available at <http://localhost:4000/graphql> when the
+server is running.
