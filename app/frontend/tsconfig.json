@@ -11,5 +11,5 @@
     "jsx": "react-jsx",
     "strict": true
   },
-  "include": ["*.ts", "*.tsx"]
+  "include": ["*.ts", "*.tsx", "src/components/App.tsx", "src/query/weather-query.ts", "src/utils/utils.ts", "src/utils/types.ts"]
 }

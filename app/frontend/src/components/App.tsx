@@ -1,8 +1,8 @@
 import { type FormEvent, useMemo, useState } from "react";
 import { useQuery } from "@apollo/client";
-import { GET_WEATHER } from "./weather-query";
-import type { Forecast, WeatherContextInput, WeatherResponse, WeatherVariables } from "./types";
-import { formatTime, getDay, getWeatherIcon, isToday } from "./utils";
+import { GET_WEATHER } from "../query/weather-query";
+import type { Forecast, WeatherContextInput, WeatherResponse, WeatherVariables } from "../utils/types";
+import { formatTime, getDay, getWeatherIcon, isToday } from "../utils/utils";
 import { AiAssistance } from "./AiAssistance";
 
 const DEFAULT_LOCATION = "Melbourne, VIC, Australia";

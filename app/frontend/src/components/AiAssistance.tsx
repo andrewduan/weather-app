@@ -1,8 +1,8 @@
 import { type FormEvent, type KeyboardEvent, useEffect, useRef, useState } from "react";
 import { useLazyQuery } from "@apollo/client";
-import { ASK_AI } from "./weather-query";
-import type { AskAiResponse, AskAiVariables, WeatherContextInput } from "./types";
-import { detectPii } from "./pii";
+import { ASK_AI } from "../query/weather-query";
+import type { AskAiResponse, AskAiVariables, WeatherContextInput } from "../utils/types";
+import { detectPii } from "../utils/pii";
 
 interface AiAssistanceProps {
   open: boolean;

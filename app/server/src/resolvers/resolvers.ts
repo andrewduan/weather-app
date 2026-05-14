@@ -1,7 +1,7 @@
-import { fetchWeatherByLocation, WeatherPayload } from "./weather-service.js";
-import { askAi, extractHistoricalQuery, WeatherContextInput } from "./ai-service.js";
-import { fetchHistoricalWeather, summarizeHistoricalRecords } from "./historical-weather.js";
-import { detectPii } from "./pii.js";
+import { fetchWeatherByLocation, WeatherPayload } from "../../weather-service.js";
+import { askAi, extractHistoricalQuery, WeatherContextInput } from "../apis/ai-service.js";
+import { fetchHistoricalWeather, summarizeHistoricalRecords } from "../apis/historical-weather.js";
+import { detectPii } from "../utils/pii.js";
 
 interface WeatherArgs {
   location: string;

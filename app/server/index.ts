@@ -6,8 +6,8 @@ import express from "express";
 setDefaultAutoSelectFamily(false);
 import { ApolloServer } from "@apollo/server";
 import { expressMiddleware } from "@as-integrations/express5";
-import { typeDefs } from "./schema.js";
-import { resolvers } from "./resolvers.js";
+import { typeDefs } from "./src/schema/schema.js";
+import { resolvers } from "./src/resolvers/resolvers.js";
 
 interface ResolverContext {
   apiKey: string | undefined;
